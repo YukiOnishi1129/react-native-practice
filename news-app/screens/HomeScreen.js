@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native'
+import { StyleSheet, FlatList, SafeAreaView } from 'react-native'
 import ListItem from '../components/ListItem'
 import Constants from 'expo-constants'
 import axios from 'axios'
 
-const URL = `http://newsapi.org/v2/top-headlines?country=jp&apiKey=${Constants.manifest.extra.newsApiKey}`
+const URL = `https://newsapi.org/v2/top-headlines?country=jp&apiKey=${Constants.manifest.extra.newsApiKey}`
 // const URL = `https://asia-northeast1-news-app-udemy.cloudfunctions.net/dummy_news`
 
 export default HomeScreen = ({ navigation }) => {
