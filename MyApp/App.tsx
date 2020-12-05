@@ -8,30 +8,33 @@
  * @format
  */
 
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { ReactNode } from 'react';
+import { StyleSheet, View, Text, ViewStyle } from 'react-native';
 
-const App = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.box} />
-      <View style={styles.box} />
-      <View style={styles.box} />
-    </View>
-  );
-};
+interface Props {
+  backgroundColor: string;
+  color: string;
+  label: string;
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-evenly',
-  },
-  box: {
-    width: 100,
-    height: 100,
-    borderWidth: 1,
-    backgroundColor: 'blue',
+  label: {
+    marginTop: 100,
+    padding: 8,
+    fontSize: 24,
   },
 });
 
+const App = (props: Props) => {
+  const { backgroundColor, color, label } = props;
+
+  return <Text style={[styles.label, { backgroundColor, color }]}>{label}</Text>;
+};
+
 export default App;
+
+App.defaultProps = {
+  backgroundColor: '#008080',
+  color: 'white',
+  label: 'hello',
+};
