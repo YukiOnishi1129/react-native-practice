@@ -1,36 +1,23 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React, { useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, Image, ImageBackground, PixelRatio } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
-  contanier: {
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
+  container: {
+    margin: 32,
   },
-  image: {
-    width: 400,
-    height: 210,
+  block: {
+    width: '100%',
+    height: 400,
   },
 });
 
-const App = () => {
+export default function App() {
   return (
-    <View style={styles.contanier}>
-      <ImageBackground source={{ uri: 'logo' }} style={styles.image}>
-        <Text>React Native</Text>
-      </ImageBackground>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={[styles.block, { backgroundColor: 'red' }]}>RED</Text>
+      <Text style={[styles.block, { backgroundColor: 'green' }]}>GREEN</Text>
+      <Text style={[styles.block, { backgroundColor: 'blue' }]}>BLUE</Text>
+      <Text style={[styles.block, { backgroundColor: 'yellow' }]}>YELLOW</Text>
+    </ScrollView>
   );
-};
-
-export default App;
+}
