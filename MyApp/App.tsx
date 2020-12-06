@@ -8,33 +8,36 @@
  * @format
  */
 
-import React, { ReactNode } from 'react';
-import { StyleSheet, View, Text, ViewStyle } from 'react-native';
-
-interface Props {
-  backgroundColor: string;
-  color: string;
-  label: string;
-}
+import React, { useRef } from 'react';
+import { StyleSheet, View, Text, TextInput, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
-  label: {
-    marginTop: 100,
-    padding: 8,
-    fontSize: 24,
+  contanier: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  input: {
+    width: 160,
+    height: 32,
+    borderWidth: 1,
+    padding: 1,
   },
 });
 
-const App = (props: Props) => {
-  const { backgroundColor, color, label } = props;
+const App = () => {
+  const ref = useRef<TextInput>(null);
 
-  return <Text style={[styles.label, { backgroundColor, color }]}>{label}</Text>;
+  return (
+    <View style={styles.contanier}>
+      <TextInput ref={ref} style={styles.input} />
+      <Text
+        onPress={() => {
+          ref?.current?.focus();
+        }}
+      />
+    </View>
+  );
 };
 
 export default App;
-
-App.defaultProps = {
-  backgroundColor: '#008080',
-  color: 'white',
-  label: 'hello',
-};
