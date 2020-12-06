@@ -9,7 +9,7 @@
  */
 
 import React, { useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, ViewStyle } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, PixelRatio } from 'react-native';
 
 const styles = StyleSheet.create({
   contanier: {
@@ -17,25 +17,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
-  input: {
-    width: 160,
-    height: 32,
-    borderWidth: 1,
-    padding: 1,
+  image: {
+    width: 400,
+    height: 210,
   },
 });
 
 const App = () => {
-  const ref = useRef<TextInput>(null);
-
   return (
     <View style={styles.contanier}>
-      <TextInput ref={ref} style={styles.input} />
-      <Text
-        onPress={() => {
-          ref?.current?.focus();
-        }}
-      />
+      <Image source={{ uri: 'logo' }} style={styles.image} />
     </View>
   );
 };
