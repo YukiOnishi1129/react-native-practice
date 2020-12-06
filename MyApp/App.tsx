@@ -1,23 +1,31 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import md5 from 'md5';
 
 const styles = StyleSheet.create({
-  container: {
-    margin: 32,
-  },
-  block: {
-    width: '100%',
+  label: {
     height: 400,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: 'gray',
   },
 });
 
+const data = [
+  { id: 'first', title: 'ひとつめ' },
+  { id: 'second', title: 'ふたつめ' },
+  { id: 'third', title: 'みっつめ' },
+];
+
 export default function App() {
+  console.log(data);
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={[styles.block, { backgroundColor: 'red' }]}>RED</Text>
-      <Text style={[styles.block, { backgroundColor: 'green' }]}>GREEN</Text>
-      <Text style={[styles.block, { backgroundColor: 'blue' }]}>BLUE</Text>
-      <Text style={[styles.block, { backgroundColor: 'yellow' }]}>YELLOW</Text>
-    </ScrollView>
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <Text style={styles.label}>{item.title}</Text>}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      keyExtractor={item => md5(JSON.stringify(item))}
+    />
   );
 }
