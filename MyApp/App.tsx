@@ -9,7 +9,7 @@
  */
 
 import React, { useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, Image, PixelRatio } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image, ImageBackground, PixelRatio } from 'react-native';
 
 const styles = StyleSheet.create({
   contanier: {
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
 const App = () => {
   return (
     <View style={styles.contanier}>
-      <Image source={{ uri: 'logo' }} style={styles.image} />
+      <ImageBackground source={{ uri: 'logo' }} style={styles.image}>
+        <Text>React Native</Text>
+      </ImageBackground>
     </View>
   );
 };
