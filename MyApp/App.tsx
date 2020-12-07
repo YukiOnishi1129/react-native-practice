@@ -1,48 +1,40 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native';
 import md5 from 'md5';
+import useControlledComponent from './lib/hooks';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 44,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  label: {
-    // width: 200
-    height: 400,
+  button: {
+    backgroundColor: 'red',
+    width: 300,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 8,
   },
-  separator: {
-    height: 1,
-    backgroundColor: 'gray',
+  input: {
+    borderWidth: 1,
+    width: 256,
+    padding: 4,
   },
 });
 
-interface Item {
-  id: string;
-  title: string;
-}
-
-const data = [
-  { id: 'first', title: 'ひとつめ' },
-  { id: 'second', title: 'ふたつめ' },
-  { id: 'third', title: 'みっつめ' },
-  { id: 'fourth', title: '四つめ' },
-  { id: 'fifth', title: '5つめ' },
-  { id: 'sixth', title: '6つめ' },
-  { id: 'seventh', title: '7つめ' },
-];
-
 export default function App() {
-  const list = useRef<FlatList<Item>>(null);
-  const scrollToThird = useCallback(() => {
-    list?.current?.scrollToIndex({ index: 2 });
-  }, [list]);
-
+  const familyName = useControlledComponent('');
+  const personalName = useControlledComponent('');
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={scrollToThird}>
-        <Text>Scroll to third</Text>
-      </TouchableOpacity>
-      <FlatList ref={list} data={data} renderItem={({ item }) => <Text style={styles.label}>{item.title}</Text>} />
+      <TextInput style={styles.input} {...familyName} />
+      <TextInput style={styles.input} {...personalName} />
+      <Text>
+        {familyName.value}
+        {personalName.value}
+      </Text>
     </View>
   );
 }
