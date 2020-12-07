@@ -10,6 +10,7 @@ import {
   StatusBar,
   ActivityIndicator,
   Alert,
+  AppState,
 } from 'react-native';
 import md5 from 'md5';
 // import useControlledComponent from './lib/hooks';
@@ -35,43 +36,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const useErrorModalDialog = (initialErrors: Array<string>) => {
-  const [needsToShow, setNeedsToShow] = React.useState(true);
-  const [errors, setErrors] = useState(initialErrors);
-
-  useEffect(() => {
-    if (errors.length > 0 && needsToShow) {
-      setNeedsToShow(false);
-      Alert.alert(errors[0], undefined, [
-        {
-          text: 'OK',
-          onPress: () => {
-            setErrors(errors.filter((_, index) => index !== 0));
-            setNeedsToShow(true);
-          },
-        },
-      ]);
+export default function App() {
+  const [state, setState] = useState<string>(AppState.currentState);
+  const setAppState = (newState: string) => {
+    setState(newState);
+    if (newState === 'active') {
+      Alert.alert('active');
     }
-  }, [needsToShow, errors]);
-
-  const addError = (newError: string) => {
-    setErrors([...errors, newError]);
   };
 
-  return addError;
-};
+  useEffect(() => {
+    AppState.addEventListener('change', setAppState);
+    return () => {
+      AppState.removeEventListener('change', setAppState);
+    };
+  }, []);
 
-export default function App() {
-  const addError = useErrorModalDialog(['1st', '2nd', '3rd']);
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          addError('new error');
-        }}
-      >
-        <Text>generate error</Text>
-      </TouchableOpacity>
+      <Text>{state}</Text>
     </View>
   );
 }
