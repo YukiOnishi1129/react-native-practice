@@ -19,7 +19,9 @@ const Main = () => {
       <TouchableOpacity
         onPress={() => {
           // ここで画面遷移
-          navigate('Sub')
+          navigate('Sub', {
+            title: 'form Main',
+          })
         }}>
         <Text>go to sub</Text>
       </TouchableOpacity>
@@ -40,8 +42,19 @@ const Stack = createStackNavigator()
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Main" component={Main} />
+    <Stack.Navigator
+      screenOptions={({route}) => ({
+        // @ts-ignore
+        // params.titleでエラーになる
+        title: route.params && route.params.title,
+      })}>
+      <Stack.Screen
+        name="Main"
+        component={Main}
+        options={{
+          title: 'Main',
+        }}
+      />
       <Stack.Screen name="Sub" component={Sub} />
     </Stack.Navigator>
   )
