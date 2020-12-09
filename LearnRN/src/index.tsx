@@ -50,7 +50,7 @@ const StackNavigator = () => {
 const Index = () => {
   return (
     //   NavigationContainer:ルーティングを束ねておくコンテナ
-    <NavigationContainer onStateChange={(newState) => console.log(newState)}>
+    <NavigationContainer>
       <StackNavigator />
     </NavigationContainer>
   )

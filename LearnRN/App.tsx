@@ -9,7 +9,8 @@
  */
 
 import React from 'react'
-import Index from './src'
+// import Index from './src'
+import Index from './src/tab'
 
 const App = () => {
   return <Index />
