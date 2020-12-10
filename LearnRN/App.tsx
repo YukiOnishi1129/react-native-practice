@@ -10,7 +10,8 @@
 
 import React from 'react'
 // import Index from './src'
-import Index from './src/navigation'
+// import Index from './src/navigation'
+import Index from './src/mode'
 // import Index from './src/tab'
 // import Index from './src/drawer'
 
