@@ -63,7 +63,7 @@ const StackNavigator = () => {
 const Index = () => {
   return (
     //   NavigationContainer:ルーティングを束ねておくコンテナ
-    <NavigationContainer>
+    <NavigationContainer onStateChange={(newState) => console.log(newState)}>
       <StackNavigator />
     </NavigationContainer>
   )
