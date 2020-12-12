@@ -1,31 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
+import * as UiContext from './contexts/ui';
 import { StyleSheet, View, Text } from 'react-native';
-
-declare const global: { HermesInternal: null | {} };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import Routes from './routes';
 
 const App = () => {
+  const [applicationState, setApplicationState] = React.useState(UiContext.createApplicationInitialState());
   return (
-    <View style={styles.container}>
-      <Text>Hello world</Text>
-    </View>
+    <UiContext.Context.Provider value={{ applicationState, setApplicationState }}>
+      <Routes />
+    </UiContext.Context.Provider>
   );
 };
 
