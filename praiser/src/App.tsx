@@ -1,6 +1,5 @@
 import React from 'react';
 import * as UiContext from './contexts/ui';
-import { StyleSheet, View, Text } from 'react-native';
 import Routes from './routes';
 
 const App = () => {
