@@ -24,6 +24,9 @@ const forFade = ({ current }: StackCardInterpolationProps) => ({
   },
 });
 
+/**
+ * Home画面のDrawerルーティング
+ */
 const HomeWithDrawer = () => {
   return (
     <HomeDrawer.Navigator>
@@ -33,6 +36,9 @@ const HomeWithDrawer = () => {
   );
 };
 
+/**
+ * Statistics画面のDrawerルーティング
+ */
 const StatisticsWithDrawer = () => {
   return (
     <StatisticsDrawer.Navigator>
@@ -43,11 +49,35 @@ const StatisticsWithDrawer = () => {
 };
 
 /**
+ * 画面名を取得する関数
+ * @param state
+ */
+const getActiveRouteName = (state: any): string => {
+  if (!state || !state.routes) {
+    return '';
+  }
+  const route = state.routes[state.index];
+  if (route.state) {
+    return getActiveRouteName(route.state);
+  }
+  return route.name;
+};
+
+/**
  * タブルーティング
  */
 const TabRoutes = () => {
   return (
-    <Tab.Navigator initialRouteName={HOME}>
+    <Tab.Navigator
+      initialRouteName={HOME}
+      screenOptions={(props: any) => {
+        const routeName = getActiveRouteName(props.route.state);
+        return {
+          // Tabの表示・非表示を制御
+          tabBarVisible: routeName !== USER_INFO,
+        };
+      }}
+    >
       <Tab.Screen name={HOME} component={HomeWithDrawer} />
       <Tab.Screen name={STATISTICS} component={StatisticsWithDrawer} />
     </Tab.Navigator>
