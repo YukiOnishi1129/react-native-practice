@@ -1,14 +1,18 @@
 import React from 'react';
 import { createStackNavigator, StackCardInterpolationProps } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { INITIAL, LOADING, HOME, CHOOSE_LOGIN, STATISTICS } from '../../constants/path';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { INITIAL, LOADING, HOME, CHOOSE_LOGIN, STATISTICS, USER_INFO } from '../../constants/path';
 import { Initial, Loading, ChooseLogin } from '../../components/pages';
 import Home from './Home';
 import Statistics from './Statistics';
+import UserInfo from './UserInfo';
 import * as UiContext from '../../contexts/ui';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const HomeDrawer = createDrawerNavigator();
+const StatisticsDrawer = createDrawerNavigator();
 
 /**
  * cardStyleInterpolatorに与える関数
@@ -20,14 +24,32 @@ const forFade = ({ current }: StackCardInterpolationProps) => ({
   },
 });
 
+const HomeWithDrawer = () => {
+  return (
+    <HomeDrawer.Navigator>
+      <HomeDrawer.Screen name={HOME} component={Home} />
+      <HomeDrawer.Screen name={USER_INFO} component={UserInfo} />
+    </HomeDrawer.Navigator>
+  );
+};
+
+const StatisticsWithDrawer = () => {
+  return (
+    <StatisticsDrawer.Navigator>
+      <StatisticsDrawer.Screen name={STATISTICS} component={Statistics} />
+      <HomeDrawer.Screen name={USER_INFO} component={UserInfo} />
+    </StatisticsDrawer.Navigator>
+  );
+};
+
 /**
  * タブルーティング
  */
 const TabRoutes = () => {
   return (
     <Tab.Navigator initialRouteName={HOME}>
-      <Tab.Screen name={HOME} component={Home} />
-      <Tab.Screen name={STATISTICS} component={Statistics} />
+      <Tab.Screen name={HOME} component={HomeWithDrawer} />
+      <Tab.Screen name={STATISTICS} component={StatisticsWithDrawer} />
     </Tab.Navigator>
   );
 };
