@@ -5,3 +5,4 @@ export { default as ChooseLogin } from './ChooseLogin';
 export { default as Statistics } from './Statistics';
 export { default as Detail } from './Detail';
 export { default as UserInfo } from './UserInfo';
+export { default as Input } from './Input';

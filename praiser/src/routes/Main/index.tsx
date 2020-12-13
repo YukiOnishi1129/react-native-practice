@@ -2,14 +2,16 @@ import React from 'react';
 import { createStackNavigator, StackCardInterpolationProps } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { INITIAL, LOADING, HOME, CHOOSE_LOGIN, STATISTICS, USER_INFO } from '../../constants/path';
-import { Initial, Loading, ChooseLogin } from '../../components/pages';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { INITIAL, LOADING, HOME, CHOOSE_LOGIN, STATISTICS, USER_INFO, INPUT } from '../../constants/path';
+import { Initial, Loading, ChooseLogin, Input } from '../../components/pages';
 import Home from './Home';
 import Statistics from './Statistics';
 import UserInfo from './UserInfo';
 import * as UiContext from '../../contexts/ui';
 
 const Stack = createStackNavigator();
+const ModalStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const HomeDrawer = createDrawerNavigator();
 const StatisticsDrawer = createDrawerNavigator();
@@ -50,18 +52,19 @@ const StatisticsWithDrawer = () => {
 
 /**
  * 画面名を取得する関数
+ * NOTE: props.route.stateは非推奨なため、getFocusedRouteNameFromRouteを使う
  * @param state
  */
-const getActiveRouteName = (state: any): string => {
-  if (!state || !state.routes) {
-    return '';
-  }
-  const route = state.routes[state.index];
-  if (route.state) {
-    return getActiveRouteName(route.state);
-  }
-  return route.name;
-};
+// const getActiveRouteName = (state: any): string => {
+//   if (!state || !state.routes) {
+//     return '';
+//   }
+//   const route = state.routes[state.index];
+//   if (route.state) {
+//     return getActiveRouteName(route.state);
+//   }
+//   return route.name;
+// };
 
 /**
  * タブルーティング
@@ -71,7 +74,7 @@ const TabRoutes = () => {
     <Tab.Navigator
       initialRouteName={HOME}
       screenOptions={(props: any) => {
-        const routeName = getActiveRouteName(props.route.state);
+        const routeName = getFocusedRouteNameFromRoute(props.route);
         return {
           // Tabの表示・非表示を制御
           tabBarVisible: routeName !== USER_INFO,
@@ -85,6 +88,18 @@ const TabRoutes = () => {
 };
 
 /**
+ * モーダルタブのルーティング
+ */
+const TabWithModalRoutes = () => {
+  return (
+    <ModalStack.Navigator mode="modal" headerMode="none">
+      <Stack.Screen name={HOME} component={TabRoutes} />
+      <Stack.Screen name={INPUT} component={Input} />
+    </ModalStack.Navigator>
+  );
+};
+
+/**
  * ルーティング判別関数
  * @param status
  */
@@ -93,7 +108,7 @@ const switchingAuthStatus = (status: UiContext.Status) => {
     case UiContext.Status.UN_AUTHORIZED:
       return <Stack.Screen name={CHOOSE_LOGIN} component={ChooseLogin} />;
     case UiContext.Status.AUTHORIZED:
-      return <Stack.Screen name={HOME} component={TabRoutes} />;
+      return <Stack.Screen name={HOME} component={TabWithModalRoutes} />;
     case UiContext.Status.FIRST_OPEN:
     default:
       return <Stack.Screen name={INITIAL} component={Initial} />;
