@@ -2,7 +2,9 @@ import React from 'react';
 import { createStackNavigator, StackCardInterpolationProps } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { INITIAL, LOADING, HOME, CHOOSE_LOGIN, STATISTICS } from '../../constants/path';
-import { Initial, Loading, Home, ChooseLogin, Statistics } from '../../components/pages';
+import { Initial, Loading, ChooseLogin } from '../../components/pages';
+import Home from './Home';
+import Statistics from './Statistics';
 import * as UiContext from '../../contexts/ui';
 
 const Stack = createStackNavigator();
