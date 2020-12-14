@@ -18,11 +18,8 @@ export default function Counter() {
 
   return (
     <View style={styles.container}>
-      {/* ＋ボタン */}
       <PluButton count={count} setCounter={setCounter} />
-      {/* counterテキスト表示 */}
       <CounterText count={count} />
-      {/* -ボタン */}
       <ReduceButton count={count} setCounter={setCounter} />
     </View>
   );

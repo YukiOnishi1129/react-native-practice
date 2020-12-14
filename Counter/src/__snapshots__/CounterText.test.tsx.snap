@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CounterText カウントが10以上の時のテキストが表示されているCounterTextを描画できる 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "justifyContent": "center",
+      "width": 100,
+    }
+  }
+>
+  <Text>
+    you're great!
+  </Text>
+  <Text
+    style={
+      Object {
+        "fontSize": 20,
+      }
+    }
+  >
+    10
+  </Text>
+</View>
+`;
+
+exports[`CounterText 通常のCounterTextを描画する 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "justifyContent": "center",
+      "width": 100,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 20,
+      }
+    }
+  >
+    0
+  </Text>
+</View>
+`;
