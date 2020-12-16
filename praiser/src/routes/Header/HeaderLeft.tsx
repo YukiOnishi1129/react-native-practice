@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/routers';
+import { COLOR } from '../../constants/theme';
 
 export default function HeaderLeft() {
   const { dispatch } = useNavigation();
@@ -9,9 +10,5 @@ export default function HeaderLeft() {
     dispatch(DrawerActions.openDrawer());
   }, [dispatch]);
 
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>open</Text>
-    </TouchableOpacity>
-  );
+  return <Icon.Button name="bars" color={COLOR.WHITE} backgroundColor={COLOR.MAIN} onPress={onPress} />;
 }
