@@ -25,7 +25,7 @@ interface Data {
 
 const renderData = [
   {
-    text: 'Hello React Native world.\nWelcome to the JS world.\n\nThis application is made from React Native.',
+    text: 'Hell React Native world.\nWelcome to the JS world.\n\nThis application is made from React Native.',
   },
   {
     text: 'If you use this application,\nyou could manage your task.\n\nSo, please register and manage your task',
