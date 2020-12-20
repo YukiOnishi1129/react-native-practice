@@ -3,24 +3,10 @@ import React, { useEffect, useState } from "react";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { StyleSheet, Text, View } from "react-native";
-
-if (!firebase.apps.length) {
-  const firebaseConfig = {
-    apiKey: "AIzaSyAqXU1-j7af224IKDODhOu43hvnoPSAG6A",
-    authDomain: "shop-review-736f1.firebaseapp.com",
-    projectId: "shop-review-736f1",
-    storageBucket: "shop-review-736f1.appspot.com",
-    messagingSenderId: "1058416559099",
-    appId: "1:1058416559099:web:00448012e683816499815e",
-    measurementId: "G-4E38HR2KPV",
-  };
-  firebase.initializeApp(firebaseConfig);
-}
-
-type Shop = {
-  name: string;
-  place: string;
-};
+/* lib */
+import { getShops } from "./src/lib/firebase";
+/* types */
+import { Shop } from "./src/types/shop";
 
 export default function App() {
   const [shops, setShops] = useState<Shop[]>([]);
@@ -29,8 +15,7 @@ export default function App() {
   }, []);
 
   const getFirebaseItems = async () => {
-    const snapshot = await firebase.firestore().collection("shops").get();
-    const shops = snapshot.docs.map((doc) => doc.data() as Shop);
+    const shops = await getShops();
     setShops(shops);
   };
 
