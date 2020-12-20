@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 import { Shop } from "../types/shop";
+import { Stars } from "./Stars";
 
 // 画面の横幅を取得
 const { width } = Dimensions.get("window");
@@ -19,6 +20,7 @@ export const ShopReviewItem: React.FC<Props> = ({ shop }: Props) => {
       <Image source={{ uri: imageUrl }} style={styles.image} />
       <Text style={styles.nameText}>{name}</Text>
       <Text style={styles.placeText}>{place}</Text>
+      <Stars score={score} />
     </View>
   );
 };

@@ -1,6 +1,4 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import * as firebase from "firebase";
 import "firebase/firestore";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 /* lib */
