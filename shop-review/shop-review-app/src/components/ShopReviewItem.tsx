@@ -1,12 +1,46 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
+import { Shop } from "../types/shop";
 
-type Props = {};
+// 画面の横幅を取得
+const { width } = Dimensions.get("window");
+const CONTAINER_WIDTH = width / 2; // 画面の幅の半分
+const PADDING = 16;
+const IMAGE_WIDTH = CONTAINER_WIDTH - PADDING * 2;
 
-export const MyComponent: React.FC<Props> = ({}: Props) => {
-  return <View style={styles.container}></View>;
+type Props = {
+  shop: Shop;
+};
+
+export const ShopReviewItem: React.FC<Props> = ({ shop }: Props) => {
+  const { name, place, imageUrl, score } = shop;
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: imageUrl }} style={styles.image} />
+      <Text style={styles.nameText}>{name}</Text>
+      <Text style={styles.placeText}>{place}</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    width: CONTAINER_WIDTH,
+    padding: 16,
+  },
+  image: {
+    width: IMAGE_WIDTH,
+    height: IMAGE_WIDTH * 0.7,
+  },
+  nameText: {
+    fontSize: 16,
+    color: "#000",
+    marginTop: 8,
+    fontWeight: "bold",
+  },
+  placeText: {
+    fontSize: 12,
+    color: "#888",
+    marginVertical: 8,
+  },
 });
