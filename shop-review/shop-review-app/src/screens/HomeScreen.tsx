@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import "firebase/firestore";
 import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
 /* lib */
 import { getShops } from "../lib/firebase";
 /* types */
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Shop } from "../types/shop";
+import { RootStackParamList } from "../types/navigation";
 /* components */
 import { ShopReviewItem } from "../components/ShopReviewItem";
 
-export const HomeScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
+};
+
+export const HomeScreen = ({ navigation }: Props) => {
   const [shops, setShops] = useState<Shop[]>([]);
   useEffect(() => {
     getFirebaseItems();
@@ -19,12 +24,10 @@ export const HomeScreen = () => {
     setShops(shops);
   };
 
-  const shopItems = shops.map((shop, index) => (
-    <View style={{ margin: 10 }} key={index.toString()}>
-      <Text>{shop.name}</Text>
-      <Text>{shop.place}</Text>
-    </View>
-  ));
+  const onPressShop = () => {
+    // 画面遷移する
+    navigation.navigate("Shop");
+  };
 
   return (
     // SafeAreaViewで囲うことで、スマホの上の部分に余白ができる
@@ -32,7 +35,7 @@ export const HomeScreen = () => {
       <FlatList
         data={shops}
         renderItem={({ item }: { item: Shop }) => (
-          <ShopReviewItem shop={item} />
+          <ShopReviewItem shop={item} onPress={onPressShop} />
         )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2} // 横並びに何個表示させるか？
