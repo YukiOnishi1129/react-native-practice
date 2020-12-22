@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, FlatList, SafeAreaView } from "react-native";
 /* lib */
 import { getShops } from "../lib/firebase";
 /* types */
@@ -24,9 +24,11 @@ export const HomeScreen = ({ navigation }: Props) => {
     setShops(shops);
   };
 
-  const onPressShop = () => {
+  const onPressShop = (shop: Shop) => {
     // 画面遷移する
-    navigation.navigate("Shop");
+    // Home画面でshopをクリックしたら、Shop画面へshopのデータを渡す
+    // route.paramsの値で取得できる
+    navigation.navigate("Shop", { shop });
   };
 
   return (
@@ -35,7 +37,7 @@ export const HomeScreen = ({ navigation }: Props) => {
       <FlatList
         data={shops}
         renderItem={({ item }: { item: Shop }) => (
-          <ShopReviewItem shop={item} onPress={onPressShop} />
+          <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
         )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2} // 横並びに何個表示させるか？

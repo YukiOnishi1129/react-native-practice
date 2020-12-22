@@ -1,12 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+/* components */
+import { ShopDetail } from "../components/ShopDetail";
+/* type */
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
 
-export const ShopScreen: React.FC = () => {
-  useEffect(() => {}, []);
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, "Shop">;
+  route: RouteProp<RootStackParamList, "Shop">; // Homeからshopのデータを受け取るためのrouteの型
+};
+
+export const ShopScreen: React.FC<Props> = ({ navigation, route }) => {
+  // Home画面から渡ってきたshopのデータを取得
+  const { shop } = route.params;
+  useEffect(() => {
+    navigation.setOptions({ title: shop.name }); // ヘッダータブのタイトルに店名を表示させる
+  }, [shop]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Shop Screen</Text>
+      <ShopDetail shop={shop} />
     </SafeAreaView>
   );
 };
