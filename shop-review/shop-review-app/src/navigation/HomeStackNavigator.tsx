@@ -3,15 +3,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 /* screens */
 import { HomeScreen } from "../screens/HomeScreen";
 import { ShopScreen } from "../screens/ShopScreen";
+import { CreateReviewScreen } from "../screens/CreateReviewScreen";
 /* type */
 import { RootStackParamList } from "../types/navigation";
 
 const Stack = createStackNavigator<RootStackParamList>();
+const RouteStack = createStackNavigator<RootStackParamList>();
 
 /**
  * タブを生成
  */
-export const HomeStackNavigator = () => {
+const MianStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -25,5 +27,19 @@ export const HomeStackNavigator = () => {
       />
       <Stack.Screen name="Shop" component={ShopScreen} />
     </Stack.Navigator>
+  );
+};
+
+export const HomeStackNavigator = () => {
+  return (
+    //   mode="midal"にてモーダル形式で表示される
+    <RouteStack.Navigator mode="modal">
+      <RouteStack.Screen
+        name="Main"
+        component={MianStack}
+        options={{ headerShown: false }}
+      />
+      <RouteStack.Screen name="CreateReview" component={CreateReviewScreen} />
+    </RouteStack.Navigator>
   );
 };
