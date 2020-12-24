@@ -6,7 +6,7 @@ import { MainTabNavigator } from "./MainTabNavigator";
 import { AuthScreen } from "../screens/AuthScreen";
 
 export const AppNavigator = () => {
-  const user = { id: "12" };
+  const user = null;
   return (
     <NavigationContainer>
       {/* スクリーンを表示させる */}
