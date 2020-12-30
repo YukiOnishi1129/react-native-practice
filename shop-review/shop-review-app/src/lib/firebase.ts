@@ -30,7 +30,6 @@ export const siginin = async () => {
   const { uid } = userCredential.user;
   const userDoc = await firebase.firestore().collection("users").doc(uid).get();
   if (!userDoc.exists) {
-    // @ts-ignore
     await firebase.firestore().collection("users").doc(uid).set(initialUser);
     return {
       ...initialUser,
@@ -42,4 +41,8 @@ export const siginin = async () => {
       ...userDoc.data(),
     } as User;
   }
+};
+
+export const updateUser = async (userId: string, params: any) => {
+  await firebase.firestore().collection("users").doc(userId).update(params);
 };
