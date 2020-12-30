@@ -30,6 +30,7 @@ export const siginin = async () => {
   const { uid } = userCredential.user;
   const userDoc = await firebase.firestore().collection("users").doc(uid).get();
   if (!userDoc.exists) {
+    // @ts-ignore
     await firebase.firestore().collection("users").doc(uid).set(initialUser);
     return {
       ...initialUser,
