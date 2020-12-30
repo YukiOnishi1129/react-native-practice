@@ -4,6 +4,7 @@ import "firebase/auth";
 import { Shop } from "../types/shop";
 import Constants from "expo-constants";
 import { User, initialUser } from "../types/user";
+import { Review } from "../types/review";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(Constants.manifest.extra.firebase);
@@ -16,7 +17,9 @@ export const getShops = async () => {
       .collection("shops")
       .orderBy("score", "desc") // scoreの高い順にソート表示
       .get();
-    const shops = snapshot.docs.map((doc) => doc.data() as Shop);
+    const shops = snapshot.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id } as Shop)
+    );
     return shops;
   } catch (err) {
     return [];
@@ -45,4 +48,13 @@ export const siginin = async () => {
 
 export const updateUser = async (userId: string, params: any) => {
   await firebase.firestore().collection("users").doc(userId).update(params);
+};
+
+export const addReview = async (shopId: string, review: Review) => {
+  await firebase
+    .firestore()
+    .collection("shops")
+    .doc(shopId)
+    .collection("reviews")
+    .add(review);
 };
