@@ -4,6 +4,7 @@ import firebase from "firebase";
 import { createReviewRef, uploadImage } from "../lib/firebase";
 import { pickImage } from "../lib/image-picker";
 import { UserContext } from "../contexts/userContext";
+import { ReviewsContext } from "../contexts/reviewsContext";
 /* utils */
 import { getExtention } from "../utils/file";
 /* components */
@@ -28,6 +29,7 @@ export const CreateReviewScreen: React.FC<Props> = ({
   route,
 }: Props) => {
   const { user } = useContext(UserContext);
+  const { reviews, setReviews } = useContext(ReviewsContext);
   const { shop } = route.params;
   const [text, setText] = useState<string>("");
   const [score, setScore] = useState<number>(3);
@@ -69,6 +71,7 @@ export const CreateReviewScreen: React.FC<Props> = ({
     const downloadUrl = await uploadImage(imageUri, storagePath);
     // reviewドキュメントを作る
     const review = {
+      id: reviewDocRef.id,
       user: {
         id: userId,
         name: userName,
@@ -85,6 +88,8 @@ export const CreateReviewScreen: React.FC<Props> = ({
     } as Review;
     // ドキュメントのrefにsetすることで、画像URLをfirestoreに保存
     await reviewDocRef.set(review);
+    // レビュー一覧に即時反映
+    setReviews([review, ...reviews]);
     setLoading(false);
     navigation.goBack(); //モーダルを閉じる
   };
