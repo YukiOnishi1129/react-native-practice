@@ -50,11 +50,40 @@ export const updateUser = async (userId: string, params: any) => {
   await firebase.firestore().collection("users").doc(userId).update(params);
 };
 
-export const addReview = async (shopId: string, review: Review) => {
-  await firebase
+/**
+ * shopドキュメントのrefを取得
+ * @param shopId
+ */
+export const createReviewRef = async (shopId: string) => {
+  return await firebase
     .firestore()
     .collection("shops")
     .doc(shopId)
     .collection("reviews")
-    .add(review);
+    .doc(); // 自動採番のドキュメントのrefが取得できる
+};
+
+/**
+ * 画像アップロード処理
+ * @param uri
+ * @param path
+ * @return downloadUrl string 画像URL
+ */
+export const uploadImage = async (uri: string, path: string) => {
+  // uriをblob形式に変換
+  const localUri = await fetch(uri);
+  const blob = await localUri.blob();
+  // storageにupload
+  const ref = firebase.storage().ref().child(path);
+
+  let downloadUrl = "";
+  try {
+    // 画像アップロード処理
+    await ref.put(blob);
+    // アップロード後のURLを取得(後ほどfirestoreに保存する)
+    downloadUrl = await ref.getDownloadURL();
+  } catch (err) {
+    console.log(err);
+  }
+  return downloadUrl;
 };
