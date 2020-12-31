@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  View,
   StyleSheet,
   TouchableOpacity,
   GestureResponderEvent,
@@ -9,7 +8,7 @@ import { Feather } from "@expo/vector-icons";
 
 type Props = {
   onPress: (event: GestureResponderEvent) => void;
-  name: "x";
+  name: "x" | "camera";
   color?: string;
 };
 
