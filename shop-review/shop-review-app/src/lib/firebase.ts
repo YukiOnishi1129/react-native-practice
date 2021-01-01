@@ -29,7 +29,6 @@ export const getShops = async () => {
 export const siginin = async () => {
   // firebaseの匿名ログインが実行される
   const userCredential = await firebase.auth().signInAnonymously();
-  // @ts-ignore
   const { uid } = userCredential.user;
   const userDoc = await firebase.firestore().collection("users").doc(uid).get();
   if (!userDoc.exists) {
