@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { HomeStackNavigator } from "./HomeStackNavigator";
 /* screens */
 import { UserScreen } from "../screens/UserScreen";
+import { SearchScreen } from "../screens/SearchScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +38,16 @@ export const MainTabNavigator = () => {
           tabBarLabel: "User",
           tabBarIcon: ({ color, size }) => (
             <Feather name="user" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: "Search",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="search" color={color} size={size} />
           ),
         }}
       />
