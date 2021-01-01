@@ -1,8 +1,17 @@
 import * as functions from "firebase-functions";
 import admin = require("firebase-admin");
+import algoliasearch from "algoliasearch";
 import { UserInitail } from "./types/user";
 import { Review } from "./types/review";
 import { Shop } from "./types/shop";
+
+// firebaseに保存したalgoliaのkeyを取得
+const ALGOLIA_ID = functions.config().algolia.id;
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.key;
+
+// Algoliaの初期設定
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+const index = client.initIndex("reviews"); // Algliaで作成した「reviews」のindex
 
 // 最初にfirebaseの処理を初期化
 admin.initializeApp();
@@ -52,7 +61,7 @@ exports.onWriteReview = functions
   // onWrite: onCreate、onUpdate または onDelete がトリガーされたときにトリガーされます。
   // https://firebase.google.com/docs/functions/firestore-events
   .onWrite(async (change, context) => {
-    const { shopId } = context.params;
+    const { shopId, reviewId } = context.params;
     const review = change.after.data() as Review;
     const db = admin.firestore();
     try {
@@ -113,6 +122,12 @@ exports.onWriteReview = functions
       }
       // 更新
       await shopRef.update(params);
+
+      // algoliaに保存 (Clound Functionsを用いて、Alglia側にデータを保存させる)
+      index.saveObject({
+        objectID: reviewId,
+        ...review, // レビューデータを展開して保存
+      });
     } catch (err) {
       console.log(err);
     }
