@@ -142,7 +142,7 @@ exports.onWriteReview = functions
  */
 exports.scheduledFunctionCrontab = functions
   .region("asia-northeast1")
-  .pubsub.schedule("*/2 * * * *")
+  .pubsub.schedule("0 10 * * 1")
   .timeZone("Asia/Tokyo")
   .onRun(async (context) => {
     const snapshot = await admin.firestore().collection("users").get();
